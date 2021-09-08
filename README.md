@@ -17,6 +17,10 @@ The project consists of two parts. There's the main binary that can be built usi
 * On Android 4.2+, frames are only sent when something changes on the screen. On older versions frames are sent as a constant stream, whether there are changes or not.
 * Easy socket interface.
 
+## Prebuilt binaries
+
+**You can download our prebuilt binaries instead of building by yourself.** Download [this](https://drive.google.com/file/d/1qVDMYZtv0KAKRnIeQe5WSZfL-QKS6qgQ/view) archive and extract to the root directory of this repo, and you should see the new `libs` folder. Go to `run.sh` and comment out the line starting with `ndk-build` and it should work.
+
 ## Requirements
 
 * [NDK](https://developer.android.com/tools/sdk/ndk/index.html), Revision 10e (May 2015)
