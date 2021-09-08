@@ -356,7 +356,7 @@ main(int argc, char* argv[]) {
 
   // Leave a 4-byte padding to the encoder so that we can inject the size
   // to the same buffer.
-  JpgEncoder encoder(4, 0);
+  JpgEncoder encoder(12, 0);
   Minicap::Frame frame;
   bool haveFrame = false;
 
@@ -471,6 +471,9 @@ main(int argc, char* argv[]) {
     int pending, err;
     while (!gWaiter.isStopped() && (pending = gWaiter.waitForFrame()) > 0) {
       auto frameAvailableAt = std::chrono::steady_clock::now();
+      unsigned long long frameTimestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+      // MCINFO("EP %lld", frameTimestamp);
       if (skipFrames && pending > 1) {
         // Skip frames if we have too many. Not particularly thread safe,
         // but this loop should be the only consumer anyway (i.e. nothing
@@ -514,12 +517,14 @@ main(int argc, char* argv[]) {
 
       // Push it out synchronously because it's fast and we don't care
       // about other clients.
-      unsigned char* data = encoder.getEncodedData() - 4;
+      unsigned char* data = encoder.getEncodedData() - 12;
       size_t size = encoder.getEncodedSize();
 
       putUInt32LE(data, size);
+      putUInt32LE(data + 4, frameTimestamp);
+      putUInt32LE(data + 8, frameTimestamp >> 32);
 
-      if (pumps(fd, data, size + 4) < 0) {
+      if (pumps(fd, data, size + 12) < 0) {
         break;
       }
 
