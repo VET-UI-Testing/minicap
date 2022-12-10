@@ -1,5 +1,11 @@
 # minicap
 
+## Prebuilt binaries
+
+**You can download our prebuilt binaries instead of building by yourself.** Download [this](https://github.com/VET-UI-Testing/minicap/releases/download/release-20210908/minicap-prebuilt.tar.bz2) archive and extract to the root directory of this repo, and you should see the new `libs` folder. Go to `run.sh` and comment out the line starting with `ndk-build` and it should work.
+
+## About
+
 Minicap provides a socket interface for streaming realtime screen capture data out of Android devices. It is meant to be used as a component in a larger program and is therefore not immensely useful just by itself. For example, it is being used in [STF](https://github.com/openstf/stf) for remote control.
 
 Minicap works without root if started via [ADB](http://developer.android.com/tools/help/adb.html) on SDK 28 (Android 9.0) and lower. The lowest SDK level we build for is 9 (i.e. Android 2.3). Minicap also works on Android Wear. Developer previews are, in general, supported once Google releases the source code for that release. _Only the latest Developer Preview is supported, and only until there's a stable release._ Emulators are not supported. Note that Android 3.x is not supported since those versions were never open sourced.
@@ -16,10 +22,6 @@ The project consists of two parts. There's the main binary that can be built usi
 * Decent and usable but non-zero latency. Depending on encoding performance and USB transfer speed it may be one to a few frames behind the physical screen.
 * On Android 4.2+, frames are only sent when something changes on the screen. On older versions frames are sent as a constant stream, whether there are changes or not.
 * Easy socket interface.
-
-## Prebuilt binaries
-
-**You can download our prebuilt binaries instead of building by yourself.** Download [this](https://drive.google.com/file/d/1qVDMYZtv0KAKRnIeQe5WSZfL-QKS6qgQ/view) archive and extract to the root directory of this repo, and you should see the new `libs` folder. Go to `run.sh` and comment out the line starting with `ndk-build` and it should work.
 
 ## Requirements
 
